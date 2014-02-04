@@ -8,14 +8,14 @@
 
 $SEND_TO = 
 [
-	'sht.mails@gmail.com'			//Rutch
-	//,'aguivico@gmail.com'			//Fran
-	//,'enric2ndai@gmail.com'		//Enric
-	//,'javimes@gmail.com'			//Javi
-	//,'asiria86@gmail.com'			//Adam
-	//,'ggcwebdesign@gmail.com'		//Germán
-	//,'alreina87@gmail.com'		//Alex
-	//,'cid_hispano@hotmail.com'	//Orma
+	'sht.mails@gmail.com'
+	//,'aguivico@gmail.com'
+	//,'enric2ndai@gmail.com'
+	//,'javimes@gmail.com'
+	//,'asiria86@gmail.com'
+	//,'ggcwebdesign@gmail.com'
+	//,'alreina87@gmail.com'
+	//,'cid_hispano@hotmail.com'
 ];
 
 $MASTER = 'sht.mails@gmail.com';
@@ -34,17 +34,17 @@ else  if (isset($_GET['dice']))
 else
 	$dice = '1D20';
 
-if (isset($argv[3])) 
-	$onlyMaster = $argv[3];
-else  if (isset($_GET['onlyMaster']))
-	$onlyMaster = $_GET['onlyMaster'];
+if (isset($argv[3]) && filter_var($argv[3], FILTER_VALIDATE_BOOLEAN)) 
+	$onlyMaster = true;
+else  if (isset($_GET['onlyMaster']) && filter_var($_GET['onlyMaster'], FILTER_VALIDATE_BOOLEAN))
+	$onlyMaster = true;
 else
 	$onlyMaster = false;
 
-if (isset($argv[4])) 
-	$sort = $argv[4];
-else  if (isset($_GET['sort']))
-	$sort = $_GET['sort'];
+if (isset($argv[4]) && filter_var($argv[4], FILTER_VALIDATE_BOOLEAN)) 
+	$sort = true;
+else  if (isset($_GET['sort']) && filter_var($_GET['sort'], FILTER_VALIDATE_BOOLEAN))
+	$sort = true;
 else
 	$sort = false;
 
@@ -60,16 +60,19 @@ if(count($explodedDice) != 2 || !is_numeric($explodedDice[0]) || !is_numeric($ex
 for($i = 0; $i < $explodedDice[0]; $i++)
 	$rolls[$i] = mt_rand(1, $explodedDice[1]);
 
+if((bool) $sort)
+	asort($rolls);
+
 $mess = "<h1><b>".$player."</b></h1> ha tirado <b>".$explodedDice[0]."</b> dados de <b>".$explodedDice[1]."</b> caras y ha sacado:<br><h2><b>".implode(", ", $rolls)."</b></h2>";
 echo($mess);
 
 $headers = "MIME-Version: 1.0\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1";
 
-if($onlyMaster)
+if((bool) $onlyMaster)
 {
 	mail($MASTER, 'Tirada secreta de '.$player, $mess, $headers);
-	mail(implode(',', $SEND_TO), 'Tirada secreta de '.$player, "Parece que ".$player." ha tirado los dados de forma misteriosa solo para los ojos del Master...", $headers);
+	mail(implode(',', $SEND_TO), 'Tirada secreta de '.$player, "Parece que <b>".$player."</b> ha tirado los dados de forma misteriosa solo para los ojos del Master...", $headers);
 }
 else
 {
