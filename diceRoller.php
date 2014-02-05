@@ -6,19 +6,11 @@
  *
  */
 
-$SEND_TO = 
-[
-	'sht.mails@gmail.com'
-	//,'aguivico@gmail.com'
-	//,'enric2ndai@gmail.com'
-	//,'javimes@gmail.com'
-	//,'asiria86@gmail.com'
-	//,'ggcwebdesign@gmail.com'
-	//,'alreina87@gmail.com'
-	//,'cid_hispano@hotmail.com'
-];
+$emailsConfigFile = "emails-test.conf";
 
-$MASTER = 'sht.mails@gmail.com';
+$SEND_TO = file($emailsConfigFile, FILE_IGNORE_NEW_LINES);
+
+$MASTER = $SEND_TO[0];
 
 if (isset($argv[1])) 
 	$player = $argv[1];
