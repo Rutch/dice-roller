@@ -6,7 +6,7 @@
  *
  */
 
-$emailsConfigFile = "emails-test.conf";
+$emailsConfigFile = "emails.conf";
 
 $SEND_TO = file($emailsConfigFile, FILE_IGNORE_NEW_LINES);
 
