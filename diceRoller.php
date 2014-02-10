@@ -24,7 +24,7 @@ else
 
 if($player == '')
 {
-	echo  "<h1>Error!</h1> El parámetro <b>player</b> ahora es obligatorio!";
+	echo  "<h1>Error!</h1> El parametro <b>player</b> ahora es obligatorio!";
 	exit(0);
 }
 
