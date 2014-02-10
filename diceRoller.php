@@ -8,8 +8,8 @@
 
 $emailsConfigFile = "emails.conf";
 
-if (isset($_GET['debug'])
-	$SEND_TO = explode(",", $_GET['debug']);
+if (isset($_GET['debug']))
+	$SEND_TO = explode(",", (string)$_GET['debug']);
 else
 	$SEND_TO = file($emailsConfigFile, FILE_IGNORE_NEW_LINES);
 
