@@ -152,6 +152,8 @@
 
 			//Unimos arrays
 			$mergePlayerAndEnemies = array_merge($players, $enemies);
+			//Shuffle antes del ordenado, ya q los casos de empate se 'ordenan' según aparición en el array, de esta forma ese 'orden' es aleatorio
+			$this->shuffle_assoc($mergePlayerAndEnemies);
 			//Ordenamos por valor
 			arsort($mergePlayerAndEnemies);
 
@@ -182,9 +184,27 @@
 				mail($MASTER, 'Iniciativa secreta de '.$this->player, $msg, $headers);
 				mail(implode(',', $SENDTO), 'Iniciativa secreta de '.$this->player, "Parece que <b>".$this->player."</b> ha tirado iniciativa de forma misteriosa solo para los ojos del Master...", $headers);				
 			}else{
-				mail(implode(',', $SENDTO), 'Iniciativa secreta de '.$this->player, $msg, $headers);
+				mail(implode(',', $SENDTO), 'Iniciativa de '.$this->player, $msg, $headers);
 			}
 		}
+
+		/**
+		 * shuffle para arrays asociativas....
+		 * @param Array $array El array a shuflear :)
+		 */
+		private function shuffle_assoc(&$array) 
+		{
+	        $keys = array_keys($array);
+
+	        shuffle($keys);
+
+	        foreach($keys as $key)
+	            $new[$key] = $array[$key];
+
+	        $array = $new;
+
+	        return true;
+	    }
 
 		public function __destruct(){
 			$this->player;
