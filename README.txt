@@ -3,7 +3,8 @@
 ###########################################
 
 [+] Debe existir un archivo 'emails.conf' que debe contener los emails a los que se van a notificar las tiradas,
-con una dirección de email por línea, dónde la primera línea debe contener el email del master de la partida.
+con una dirección de email por línea, dónde la primera línea debe contener el email del master de la partida. Para crearlo, duplicar y renombrar
+'example-emails.conf' editando su contenido.
 
 [+] El servicio diceRoller.php acepta por GET los params siguientes:
 	[-] player		Nombre del jugador que hace la tirada (se usará este nombre en el asunto del mail de notificación). Campo OBLIGATORIO.
