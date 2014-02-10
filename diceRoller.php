@@ -2,13 +2,16 @@
 
 /**
  *	Usage:
- *		diceRoller.php?player=PlayerName&dice=1D20&onlyMaster=true&sort=true
+ *		diceRoller.php?player=PlayerName&dice=1D20&onlyMaster=true&sort=true&debug=email1@asdf.com,email2@asdf.com
  *
  */
 
 $emailsConfigFile = "emails.conf";
 
-$SEND_TO = file($emailsConfigFile, FILE_IGNORE_NEW_LINES);
+if (isset($_GET['debug'])
+	$SEND_TO = explode(",", $_GET['debug']);
+else
+	$SEND_TO = file($emailsConfigFile, FILE_IGNORE_NEW_LINES);
 
 $MASTER = $SEND_TO[0];
 
@@ -17,7 +20,13 @@ if (isset($argv[1]))
 else  if (isset($_GET['player']))
 	$player = $_GET['player'];
 else
-	$player = 'Someone';
+	$player = '';
+
+if($player == '')
+{
+	echo  "<h1>Error!</h1> El parámetro <b>player</b> ahora es obligatorio!";
+	exit(0);
+}
 
 if (isset($argv[2])) 
 	$dice = $argv[2];
@@ -40,7 +49,7 @@ else  if (isset($_GET['sort']) && filter_var($_GET['sort'], FILTER_VALIDATE_BOOL
 else
 	$sort = false;
 
-strtoupper($dice);
+mb_strtoupper($dice, 'UTF-8');
 $explodedDice = explode("D", $dice);
 
 if(count($explodedDice) != 2 || !is_numeric($explodedDice[0]) || !is_numeric($explodedDice[1]))
@@ -58,7 +67,9 @@ if((bool) $sort)
 $mess = "<h1><b>".$player."</b></h1> ha tirado <b>".$explodedDice[0]."</b> dados de <b>".$explodedDice[1]."</b> caras y ha sacado:<br><h2><b>".implode(", ", $rolls)."</b></h2>";
 echo($mess);
 
-$headers = "MIME-Version: 1.0\n";
+$headers = "From: DAIGEONS & DAIGONS <diceRoller@tupajar.com>\n";
+$headers .= "Reply-To: DAIGEONS & DAIGONS <no-reply@tupajar.com>\n";
+$headers .= "MIME-Version: 1.0\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1";
 
 if((bool) $onlyMaster)
