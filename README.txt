@@ -13,5 +13,6 @@ con una dirección de email por línea, dónde la primera línea debe contener e
 					son notificados con un mensaje, pero no pueden ver los resultados. Default FALSE
 	[-] sort		Indica si se ordenan los resultados sacados de menor a mayor. Default FALSE
 	[-] debug		Permite entrar un listado de emails separados por comas. Si se usa este parámetro se notificará por email solamente a 
-					los indicados en esta lista.
+					los indicados en esta lista. El formato de los mails pasados por este param será: 
+					debug=Example1<example1@example.com>,Example2<example2@example.com>
 
