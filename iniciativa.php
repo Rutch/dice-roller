@@ -27,10 +27,11 @@
 	$onlyMaster = isset($_GET['onlyMaster']) ? $_GET['onlyMaster'] : "";
 	$enemies = isset($_GET['enemies']) ? urldecode($_GET['enemies']) : "";
 	$SEND_TO = isset($_GET['debug']) ? explode(",", $_GET['debug']) : file($emailsConfigFile, FILE_IGNORE_NEW_LINES);
+	$dice = isset($_GET['dice']) ? $_GET['dice'] : "1D10";
 	
 
 	//Instanciamos clase
-	$rpg = new RPGThrowingInitiative($_GET['player'], $players, $enemies, $onlyMaster);
+	$rpg = new RPGThrowingInitiative($_GET['player'], $players, $enemies, $onlyMaster, strtoupper($dice));
 	
 	//Iniciativa de jugadores	
 	$playersInitiative = $rpg->throwingInitiative('players');	
@@ -52,8 +53,8 @@
 	$rpg = null;	
 	
 	//Clase de iniciativa
-	class RPGThrowingInitiative{
-		
+	class RPGThrowingInitiative
+	{
 		//Variables, todas privadas para no llamarlas desde fuera. Chorrada
 		private $players;
 		private $player;
@@ -62,6 +63,7 @@
 		private $arrayEnemiesInitiative = array();
 		private $orderingInitiative = "<table><tr><td>Jugador/Enemigo</td><td>&nbsp;&nbsp;&nbsp;</td><td>Tirada</td></tr>\n\r";
 		private $onlyMaster = false;
+		private $dice;
 
 		/*
 		 * Contructor de la clase con datos mínimos
@@ -71,9 +73,10 @@
 		 * @param string $onlyMaster
 		 * Asignamos variables y convertimos string to array y string to boolean
 		 */
-		public function __construct($player, $players, $enemies, $onlyMaster){
-
-			$this->player = $player;			
+		public function __construct($player, $players, $enemies, $onlyMaster, $dice)
+		{
+			$this->player = $player;
+			$this->dice = $dice;
 						
 			if($players == ""){
 				$this->players = array("Javi","Adam","Alex","Fran","Rutch","Enric","Germán");					
@@ -100,46 +103,27 @@
 		 * @param string $who según sea enemies or players
 		 * return array con los enemigos/jugadores y su iniciativa		 
 		 */	
-		public function throwingInitiative( $who ){
+		public function throwingInitiative( $who )
+		{
+			$explodedDice = explode("D", $this->dice);
 
-			switch ($who) {
-				case 'players':
-					//Contamos nº de jugadores
-					$totalPlayers = count($this->players);
-					
-					//Creamos array para almacenar datos
-					$arrayPlayersInitiative = array();
+			if($who == "players")
+				$baseArray = $this->players;
+			else if($who == "enemies")
+				$baseArray = $this->enemies;
 
-					//Bucle, recorremos, asignamos al jugador la iniciativa
-					for($i=0; $i < $totalPlayers; $i++){
-						
-						$playerName = $this->players[$i];
-						$arrayPlayersInitiative[$playerName] = mt_rand(1,20);
-					}
-					
-					return $arrayPlayersInitiative;
-				
-				break;
-				
-				case 'enemies':
-					//Contamos nº de enemigos
-					$totalEnemies= count($this->enemies);
-					
-					//Creamos array para almacenar datos
-					$arrayEnemiesInitiative = array();
-
-					//Bucle, recorremos, asignamos al jugador la iniciativa
-					for($i=0; $i < $totalEnemies; $i++){
-						
-						$enemyName = $this->enemies[$i];
-						$arrayEnemiesInitiative[$enemyName] = mt_rand(1,20);
-					}
-					
-					return $arrayEnemiesInitiative;
-				break;	
+			//Contamos nº de jugadores
+			$totalPlayers = count($baseArray);
+			//Creamos array para almacenar datos
+			$arrayInitiative = array();
+			//Bucle, recorremos, asignamos al jugador la iniciativa
+			for($i=0; $i < $totalPlayers; $i++)
+			{
+				$playerName = $baseArray[$i];
+				$arrayInitiative[$playerName] = mt_rand(1, $explodedDice[1]);
 			}
-
-
+			
+			return $arrayInitiative;
 		}
 
 		/*
