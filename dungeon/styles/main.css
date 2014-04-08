@@ -13,8 +13,16 @@ h1
 {
 	color: #8AC007;
 	font-weight: bold;
-	font-size: 30px;
+	font-size: 35px;
 	text-shadow: -1px -1px white, 1px 1px black;/*#d3d3d3;*/
+}
+
+h2 
+{
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0px;
+	margin-bottom: 15px;
 }
 
 div
@@ -46,6 +54,11 @@ div
 	padding-left: 10px;
 }
 
+.top-bar-menu-selected
+{
+	font-weight: bold;
+}
+
 .top-bar-login
 {
 	float: right;
@@ -65,5 +78,33 @@ div
 
 .content
 {
-	padding-top: 10px;
+	padding: 10px;
+	background-color: #ffffff;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+.content-tirar-dados fieldset
+{
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.content-tirar-dados legend
+{
+	font-weight: bold;
+}
+
+.content-tirar-dados-form-element
+{
+	float: left;
+	padding-right: 20px;
+}
+
+.content-tirar-dados-form-element fieldset
+{
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+	border-radius: 0px;
 }

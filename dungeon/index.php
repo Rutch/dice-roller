@@ -72,11 +72,17 @@ if (isset($_GET['logout']))
         $first = $data['namePerson/first'];
 ?>
                     <div class="top-bar-menu">
+<?php if($_GET['menu'] == 1) echo "<span class='top-bar-menu-selected'>"; ?>
                         <a href="http://www.tupajar.com/index.php?menu=1">MIS PARTIDAS</a>
+<?php if($_GET['menu'] == 1) echo "</span>"; ?>
                         <span style="letter-spacing:14px; padding-left:14px;"> |</span>
+<?php if($_GET['menu'] == 2) echo "<span class='top-bar-menu-selected'>"; ?>
                         <a href="http://www.tupajar.com/index.php?menu=2">CREAR PARTIDA</a>
+<?php if($_GET['menu'] == 2) echo "</span>"; ?>
                         <span style="letter-spacing:14px; padding-left:14px;"> |</span>
+<?php if($_GET['menu'] == 3) echo "<span class='top-bar-menu-selected'>"; ?>
                         <a href="http://www.tupajar.com/index.php?menu=3">TIRAR DADOS</a>
+<?php if($_GET['menu'] == 3) echo "</span>"; ?>
                     
                         <div class="top-bar-login">
                             <span>
@@ -123,6 +129,7 @@ if (isset($_GET['logout']))
         }
     }
 ?>
+            <br>
         </div>
 
     </body>
