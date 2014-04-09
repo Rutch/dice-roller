@@ -108,3 +108,20 @@ div
 	border-bottom: none;
 	border-radius: 0px;
 }
+
+.content-tirar-dados-form-element input
+{
+	resize: none;
+	border-radius: 5px;
+}
+
+.content-tirar-dados-form-element textarea
+{
+	border: 1px solid #999999;
+	border-radius: 5px;
+}
+
+.content-tirar-dados-form-element input:focus, .content-tirar-dados-form-element textarea:focus 
+{ 
+	border: solid 1px #cc0000; 
+}
