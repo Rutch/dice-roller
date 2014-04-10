@@ -113,9 +113,10 @@ div
 {
 	resize: none;
 	border-radius: 5px;
+	border: 1px solid #999999;
 }
 
-.content-tirar-dados-form-element textarea
+.content-tirar-dados-form-element textarea, .content-tirar-dados-form-element button
 {
 	border: 1px solid #999999;
 	border-radius: 5px;
